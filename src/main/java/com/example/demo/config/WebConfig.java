@@ -27,25 +27,27 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000", "http://localhost:4200") // Restringe a los orígenes de tu frontend en desarrollo. ¡CAMBIA ESTO EN PRODUCCIÓN!
+                .allowedOrigins("http://localhost:3000", "http://localhost:4200") // Cambia esto en producción
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(false).maxAge(3600);
+                .allowCredentials(false)
+                .maxAge(3600);
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // Deshabilitar CSRF es común para APIs REST
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/usuarios/**", "/api/empresas/**", "/api/materiales/**").permitAll() // Permite acceso público a la API de usuarios, empresas y materiales
-                .anyRequest().authenticated() // Cualquier otra ruta futura requerirá autenticación
+                .requestMatchers("/api/usuarios/**", "/api/empresas/**", "/api/materiales/**").permitAll()
+                .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider());
         return http.build();
     }
 
     @Bean
+    @SuppressWarnings("deprecation")
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
