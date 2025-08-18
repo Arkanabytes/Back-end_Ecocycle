@@ -18,6 +18,7 @@ EcoCycle conecta recolectores y procesadores de residuos a través de una innova
 - 🎁 **Sistema de Recompensas por Tokens**: EcoTokens incentivan la participación y prácticas sostenibles
 - 📊 **Seguimiento de Impacto**: Métricas e informes de impacto ambiental en tiempo real
 - 📱 **Diseño Mobile-First**: Interfaz accesible para trabajadores de campo y pequeños negocios
+- 
 
 ## 🏗️ Arquitectura del Sistema
 
@@ -44,6 +45,118 @@ EcoCycle conecta recolectores y procesadores de residuos a través de una innova
               │ Base de Datos   │
               └─────────────────┘
 ```
+## 🗺️ Mapas Conceptuales
+
+### Mapa Conceptual 1: Arquitectura General del Sistema
+```mermaid
+graph TB
+    A[Usuario] --> B[Frontend - React.js]
+    B --> C[API REST - Express.js]
+    C --> D[Base de Datos - MongoDB]
+    
+    B --> E[Mapa Interactivo]
+    B --> F[Sistema de Recompensas]
+    B --> G[Centro Educativo]
+    B --> H[Perfil Usuario]
+    
+    C --> I[Autenticación JWT]
+    C --> J[Controladores]
+    C --> K[Middleware]
+    
+    E --> L[Google Maps API]
+    F --> M[Sistema de Puntos]
+    G --> N[Recursos Educativos]
+    H --> O[Estadísticas Personales]
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+```
+
+### Mapa Conceptual 2: Flujo de Autenticación
+```mermaid
+sequenceDiagram
+    participant U as Usuario
+    participant F as Frontend
+    participant A as API Auth
+    participant DB as Database
+    
+    U->>F: Datos de registro/login
+    F->>A: POST /auth/login
+    A->>DB: Verificar credenciales
+    DB-->>A: Usuario validado
+    A-->>F: Token JWT + Datos usuario
+    F-->>U: Acceso autorizado
+    
+    Note over F,A: Token almacenado en memoria
+    
+    U->>F: Solicitud autenticada
+    F->>A: Request con token
+    A->>A: Validar token JWT
+    A-->>F: Respuesta autorizada
+    F-->>U: Datos solicitados
+```
+
+### Mapa Conceptual 3: Sistema de Reciclaje y Recompensas
+```mermaid
+graph LR
+    A[Usuario Registra Actividad] --> B[Validación de Datos]
+    B --> C[Cálculo de Puntos]
+    C --> D[Actualización Base Datos]
+    D --> E[Notificación al Usuario]
+    
+    F[Localizar Punto Reciclaje] --> G[Consulta Geolocalización]
+    G --> H[Filtrar por Proximidad]
+    H --> I[Mostrar en Mapa]
+    I --> J[Seleccionar Punto]
+    J --> K[Registrar Visita]
+    K --> L[Otorgar Recompensa]
+    
+    M[Centro Educativo] --> N[Categorías de Residuos]
+    N --> O[Guías de Reciclaje]
+    O --> P[Tips Sostenibilidad]
+    P --> Q[Impacto Ambiental]
+    
+    style A fill:#ffebee
+    style F fill:#e8f5e8
+    style M fill:#fff3e0
+```
+
+### Mapa Conceptual 4: API y Endpoints
+```mermaid
+graph TD
+    API[API REST Ecocycle] --> AUTH[/api/auth/]
+    API --> USERS[/api/users/]
+    API --> POINTS[/api/recycling-points/]
+    API --> ACTIVITIES[/api/activities/]
+    
+    AUTH --> AUTH1[POST /register]
+    AUTH --> AUTH2[POST /login]
+    AUTH --> AUTH3[POST /logout]
+    AUTH --> AUTH4[POST /refresh]
+    
+    USERS --> USER1[GET /profile]
+    USERS --> USER2[PUT /profile]
+    USERS --> USER3[GET /stats]
+    
+    POINTS --> POINT1[GET / - Listar todos]
+    POINTS --> POINT2[POST / - Crear punto]
+    POINTS --> POINT3[GET /:id - Punto específico]
+    POINTS --> POINT4[GET /nearby - Puntos cercanos]
+    
+    ACTIVITIES --> ACT1[POST / - Registrar actividad]
+    ACTIVITIES --> ACT2[GET /user/:userId - Por usuario]
+    ACTIVITIES --> ACT3[GET /leaderboard - Tabla líderes]
+    
+    style API fill:#e1f5fe
+    style AUTH fill:#ffebee
+    style USERS fill:#e8f5e8
+    style POINTS fill:#fff3e0
+    style ACTIVITIES fill:#f3e5f5
+```
+
+---
 
 ## 📋 Requisitos Previos
 
